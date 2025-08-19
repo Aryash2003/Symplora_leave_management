@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask API Tester</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, button {
+      margin: 5px;
+      padding: 8px;
+    }
+    button {
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #222;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flask API Tester</h1>
+
+  <h2>Get Users</h2>
+  <button onclick="getUsers()">Fetch Users</button>
+
+  <h2>Create User</h2>
+  <form id="createUserForm">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="department" placeholder="Department" required>
+    <input type="text" name="joining_date" placeholder="DD-MM-YYYY" required>
+    <input type="text" name="role" placeholder="Role (optional)">
+    <input type="number" name="leave_balance" placeholder="Leave Balance (default 45)">
+    <button type="submit">Create User</button>
+  </form>
+
+  <h2>Apply Leave</h2>
+  <form id="applyLeaveForm">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="text" name="start_date" placeholder="Start Date (YYYY-MM-DD)" required>
+    <input type="text" name="end_date" placeholder="End Date (YYYY-MM-DD)" required>
+    <input type="text" name="reason" placeholder="Reason" required>
+    <button type="submit">Apply Leave</button>
+  </form>
+
+  <h2>Show Leaves</h2>
+  <button onclick="showLeaves()">Fetch All Leaves</button>
+
+  <h2>Get Leave Balance</h2>
+  <form id="leaveBalanceForm">
+    <input type="text" name="username" placeholder="Username" required>
+    <button type="submit">Get Balance</button>
+  </form>
+
+  <h2>Update Leave Balance (Admin)</h2>
+  <form id="updateBalanceForm">
+    <input type="text" name="leave_id" placeholder="Leave ID" required>
+    <input type="text" name="status" placeholder="approved / rejected" required>
+    <button type="submit">Update Balance</button>
+  </form>
+
+  <h2>Cancel All Leaves</h2>
+  <form id="cancelLeaveForm">
+    <input type="text" name="username" placeholder="Username" required>
+    <button type="submit">Cancel All</button>
+  </form>
+
+  <h2>Output</h2>
+  <div id="output">Responses will appear here...</div>
+
+  <script>
+    const API = "http://127.0.0.1:5000";
+
+    function showOutput(data) {
+      document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function getUsers() {
+      let res = await fetch(`${API}/users`);
+      let data = await res.json();
+      showOutput(data);
+    }
+
+    document.getElementById("createUserForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let formData = new FormData(e.target);
+      let res = await fetch(`${API}/create_users`, {
+        method: "POST",
+        body: formData
+      });
+      let data = await res.json();
+      showOutput(data);
+    };
+
+    document.getElementById("applyLeaveForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let formData = new FormData(e.target);
+      let res = await fetch(`${API}/apply_leave`, {
+        method: "POST",
+        body: formData
+      });
+      let data = await res.json();
+      showOutput(data);
+    };
+
+    async function showLeaves() {
+      let res = await fetch(`${API}/show_leaves`);
+      let data = await res.json();
+      showOutput(data);
+    }
+
+    document.getElementById("leaveBalanceForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let username = e.target.username.value;
+      let res = await fetch(`${API}/get_leave_bal?username=${username}`);
+      let data = await res.json();
+      showOutput(data);
+    };
+
+    document.getElementById("updateBalanceForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let formData = new FormData(e.target);
+      let res = await fetch(`${API}/update_leave_balance`, {
+        method: "POST",
+        body: formData
+      });
+      let data = await res.json();
+      showOutput(data);
+    };
+
+    document.getElementById("cancelLeaveForm").onsubmit = async (e) => {
+      e.preventDefault();
+      let formData = new FormData(e.target);
+      let res = await fetch(`${API}/cancel_all_leave`, {
+        method: "POST",
+        body: formData
+      });
+      let data = await res.json();
+      showOutput(data);
+    };
+  </script>
+</body>
+</html>
