@@ -95,6 +95,18 @@
       document.getElementById("output").innerText = JSON.stringify(data, null, 2);
     }
 
+    // ✅ Helper to skip empty fields
+    function buildFormData(formElement) {
+      const formData = new FormData();
+      [...formElement.elements].forEach(el => {
+        if (el.name && el.value.trim() !== "") {
+          formData.append(el.name, el.value.trim());
+        }
+      });
+      return formData;
+    }
+
+    // --- API Calls ---
     async function getUsers() {
       let res = await fetch(`${API}/users`);
       let data = await res.json();
@@ -103,22 +115,16 @@
 
     document.getElementById("createUserForm").onsubmit = async (e) => {
       e.preventDefault();
-      let formData = new FormData(e.target);
-      let res = await fetch(`${API}/create_users`, {
-        method: "POST",
-        body: formData
-      });
+      let formData = buildFormData(e.target);
+      let res = await fetch(`${API}/create_users`, { method: "POST", body: formData });
       let data = await res.json();
       showOutput(data);
     };
 
     document.getElementById("applyLeaveForm").onsubmit = async (e) => {
       e.preventDefault();
-      let formData = new FormData(e.target);
-      let res = await fetch(`${API}/apply_leave`, {
-        method: "POST",
-        body: formData
-      });
+      let formData = buildFormData(e.target);
+      let res = await fetch(`${API}/apply_leave`, { method: "POST", body: formData });
       let data = await res.json();
       showOutput(data);
     };
@@ -131,7 +137,8 @@
 
     document.getElementById("leaveBalanceForm").onsubmit = async (e) => {
       e.preventDefault();
-      let username = e.target.username.value;
+      let username = e.target.username.value.trim();
+      if (!username) return;
       let res = await fetch(`${API}/get_leave_bal?username=${username}`);
       let data = await res.json();
       showOutput(data);
@@ -139,22 +146,16 @@
 
     document.getElementById("updateBalanceForm").onsubmit = async (e) => {
       e.preventDefault();
-      let formData = new FormData(e.target);
-      let res = await fetch(`${API}/update_leave_balance`, {
-        method: "POST",
-        body: formData
-      });
+      let formData = buildFormData(e.target);
+      let res = await fetch(`${API}/update_leave_balance`, { method: "POST", body: formData });
       let data = await res.json();
       showOutput(data);
     };
 
     document.getElementById("cancelLeaveForm").onsubmit = async (e) => {
       e.preventDefault();
-      let formData = new FormData(e.target);
-      let res = await fetch(`${API}/cancel_all_leave`, {
-        method: "POST",
-        body: formData
-      });
+      let formData = buildFormData(e.target);
+      let res = await fetch(`${API}/cancel_all_leave`, { method: "POST", body: formData });
       let data = await res.json();
       showOutput(data);
     };

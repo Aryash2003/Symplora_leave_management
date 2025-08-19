@@ -49,6 +49,9 @@ def create_user():
     existing_user = User.query.filter_by(username=name).first()
     if existing_user:
         return {"message": "User already exists."}, 400
+    existing_email = User.query.filter_by(email=email).first()
+    if existing_email:
+        return {"message": "Email already exists."}, 400
 
     # Validate email format (very simple check)
     if '@' not in email or '.' not in email:
