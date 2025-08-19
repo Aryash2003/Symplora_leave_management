@@ -170,6 +170,24 @@ def update_leave_balance():
     db.session.commit()
 
     return {"message": "Leave balance updated successfully!"}, 200
+
+@app.route('/cancel_all_leave', methods=['POST'])
+def cancel_all_leave():
+    username = request.form.get('username')
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return {"message": "User not found."}, 404
+    # Fetch all leave requests for the user
+    leave_requests = LeaveRequest.query.filter_by(username=username).all()
+    if not leave_requests:
+        return {"message": "No leave requests found for this user."}, 404
+    # Cancel all leave requests
+    for leave in leave_requests:
+        db.session.delete(leave)
+    db.session.commit()
+
+    return {"message": "All leave requests cancelled successfully!"}, 200
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
