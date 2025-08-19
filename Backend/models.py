@@ -1,6 +1,8 @@
 from config import *
 from datetime import datetime
 class User(db.Model):
+    __tablename__ = 'user'
+    
     username = db.Column(db.String(80), nullable=False,primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     department = db.Column(db.String(100), nullable=False)
@@ -23,12 +25,12 @@ class User(db.Model):
 class LeaveRequest(db.Model):
     __tablename__ = 'leave_request'
 
-    username = db.Column(db.String(80), db.ForeignKey('user.username'), primary_key=True)
-    leave_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    start_date = db.Column(db.Date, primary_key=True)
+    leave_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  
+    username = db.Column(db.String, db.ForeignKey("user.username"), nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    reason = db.Column(db.String(200), nullable=False)
-    status= db.Column(db.String(20), default='pending')
+    reason = db.Column(db.String, nullable=True)
+    status = db.Column(db.String, default="Pending")
 
 
     def to_json(self):

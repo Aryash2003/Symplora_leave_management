@@ -77,9 +77,16 @@ def leave_apply():
     reason = request.form.get('reason')
     name = request.form.get('username')
 
+    def parse_date(date_str):
+        for fmt in ("%Y-%m-%d", "%d-%m-%Y"):
+            try:
+                return datetime.strptime(date_str, fmt).date()
+            except ValueError:
+                continue
+        raise ValueError("Invalid date format. Use YYYY-MM-DD or DD-MM-YYYY")
     # Convert string (YYYY-MM-DD) → Python date
-    start_date_d = datetime.strptime(start_date, "%Y-%m-%d").date()
-    end_date_d = datetime.strptime(end_date, "%Y-%m-%d").date()
+    start_date_d = parse_date(start_date)
+    end_date_d = parse_date(end_date)
 
     if start_date_d > end_date_d:
         return {"message": "Start date cannot be after end date."}, 400
@@ -90,7 +97,7 @@ def leave_apply():
 
     # Calculate total leave days
     total_leave = (end_date_d - start_date_d).days + 1
-
+    print(f"Total leave days requested: {total_leave}")
     # Check leave balance
     if user.leave_balance < total_leave:
         return {"message": "Insufficient leave balance."}, 400
@@ -143,13 +150,26 @@ def get_leave_balance():
 @app.route('/update_leave_balance', methods=['POST'])
 def update_leave_balance():
     leave_id = request.form.get('leave_id')
-    leave_no=LeaveRequest.query.filter_by(leaave_id=leave_id).first()
+    status_curr= request.form.get('status')
+    leave_no=LeaveRequest.query.filter_by(leave_id=leave_id).first()
     user=User.query.filter_by(username=leave_no.username).first()
+    print(f"Updating leave balance for user: {user.username} with leave_id: {leave_id}")
     if not user:
         return {"message": "User not found."}, 404
-    user.status = 'approved'
-    user.leave_balance -= user.leave_balance
+    if(status_curr != 'approved'):
+        leave_no.status = 'rejected'
+        db.session.commit()
+        return {"message": "Leave request not approved."}, 200
+    total_leaves=((leave_no.end_date - leave_no.start_date).days + 1)
+    if(user.leave_balance < total_leaves):
+        leave_no.status = 'rejected'
+        db.session.commit()
+        return {"message": "Insufficient leave balance so leave cannot be accepted."}, 200 
+    leave_no.status = 'approved'
+    user.leave_balance -= total_leaves
     db.session.commit()
+
+    return {"message": "Leave balance updated successfully!"}, 200
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
