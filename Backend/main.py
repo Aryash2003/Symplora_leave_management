@@ -18,7 +18,10 @@ def create_user():
     department = request.form.get('department')
     joining_date_str = request.form.get('joining_date')
     id = request.form.get('id')
+    role = request.form.get('role')
 
+    if role not in ['admin', 'employee']:
+        return {"error": "Invalid role specified"}, 400
     # Convert string (YYYY-MM-DD) → Python date
     joining_date = datetime.strptime(joining_date_str, "%Y-%m-%d").date()
 
@@ -27,7 +30,8 @@ def create_user():
         username=name,
         email=email,
         department=department,
-        joining_date=joining_date
+        joining_date=joining_date,
+        role=role
     )
 
     db.session.add(new_user)

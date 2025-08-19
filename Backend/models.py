@@ -6,6 +6,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     department = db.Column(db.String(100), nullable=False)
     joining_date = db.Column(db.Date, nullable=False)
+    role = db.Column(db.String(20), nullable=False, default='employee')
 
     def __init__(self, **kwargs):
         from datetime import datetime
@@ -21,4 +22,5 @@ class User(db.Model):
             "email": self.email,
             "department": self.department,
             "joining_date": self.joining_date.isoformat(),
+            "role": self.role
         }
