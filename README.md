@@ -14,7 +14,7 @@ A simple leave-management backend built with **Flask**, **Flask-SQLAlchemy**, an
 
 ---
 
-## �¥\xa5 Tech Stack
+## Tech Stack
 - **Backend:** Python, Flask, Flask-SQLAlchemy, Flask-CORS
 - **Database:** SQLite (file-based; can swap to PostgreSQL for production)
 - **Tester UI:** Plain HTML + Fetch API
