@@ -188,7 +188,7 @@ def cancel_all_leave():
         return {"message": "No leave requests found for this user."}, 404
     # Cancel all leave requests
     for leave in leave_requests:
-        db.session.delete(leave)
+        leave.status='rejected'
     db.session.commit()
 
     return {"message": "All leave requests cancelled successfully!"}, 200
