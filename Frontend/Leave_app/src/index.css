@@ -1,0 +1,33 @@
+:root {
+  font-family: 'Segoe UI', Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: #f0f4fa;
+  background-color: #1a2233; /* Dark background */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #1a2233; /* Dark background */
+}
+
+h1, h2, h3, label, th, td {
+  color: #f0f4fa;
+}
+
+input, select {
+  padding: 0.5em 1em;
+  margin: 0.5em 0.5em 0.5em 0;
+  border: 1px solid #444;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #222a38;
+  color: #f0f4fa;
+}

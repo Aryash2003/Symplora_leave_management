@@ -20,6 +20,7 @@ def create_user():
     joining_date_str = request.form.get('joining_date')
     role = request.form.get('role', 'employee')
     leave_balance = request.form.get('leave_balance', 45)
+    password=request.form.get('password')
 
     # Required fields check
     if not name or not email or not department or not joining_date_str:
@@ -64,7 +65,8 @@ def create_user():
         department=department,
         joining_date=joining_date,
         role=role,
-        leave_balance=leave_balance
+        leave_balance=leave_balance,
+        password=password
     )
 
     db.session.add(new_user)

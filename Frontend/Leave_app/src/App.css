@@ -1,0 +1,81 @@
+#root {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+h2, h3 {
+  color: #213547;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 0.75em 1em;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+th {
+  background: #f0f4fa;
+  color: #213547;
+  font-weight: 600;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+input, select {
+  padding: 0.5em 1em;
+  margin: 0.5em 0.5em 0.5em 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #f9f9f9;
+}
+
+form {
+  margin-bottom: 2em;
+}
+
+button {
+  border-radius: 8px;
+  border: none;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: #646cff;
+  color: #fff;
+  cursor: pointer;
+  margin: 0.5em;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #535bf2;
+}
+
+.card {
+  padding: 2em;
+  background: #f0f4fa;
+  border-radius: 8px;
+  margin-bottom: 1em;
+}
+
+.read-the-docs {
+  color: #888;
+  font-size: 0.9em;
+}

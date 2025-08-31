@@ -9,7 +9,7 @@ class User(db.Model):
     joining_date = db.Column(db.Date, nullable=False)
     leave_balance = db.Column(db.Integer, nullable=False, default=45)
     role = db.Column(db.String(20), nullable=False, default='employee')
-
+    password=db.Column(db.String(30),nullable=False)
     def to_json(self):
         return {
             "username": self.username,
@@ -17,7 +17,8 @@ class User(db.Model):
             "department": self.department,
             "joining_date": self.joining_date,
             "role": self.role,
-            "leave_balance": self.leave_balance 
+            "leave_balance": self.leave_balance,
+            "password":self.password
         }
 
         
