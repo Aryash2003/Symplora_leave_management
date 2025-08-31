@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const UserDashboard = () => {
   const username = localStorage.getItem("username");
   const [leaveBalance, setLeaveBalance] = useState(0);
@@ -7,10 +9,10 @@ const UserDashboard = () => {
   const [form, setForm] = useState({ start_date: "", end_date: "", reason: "" });
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/get_leave_bal?username=${username}`)
+    fetch(`${API_URL}get_leave_bal?username=${username}`)
       .then(res => res.json())
       .then(data => setLeaveBalance(data.leave_balance));
-    fetch("http://127.0.0.1:5000/show_leaves")
+    fetch(`${API_URL}show_leaves`)
       .then(res => res.json())
       .then(data => setLeaves(data.leaves.filter(l => l.username === username)));
   }, [username]);
@@ -23,7 +25,7 @@ const UserDashboard = () => {
     formData.append("end_date", form.end_date);
     formData.append("reason", form.reason);
 
-    const res = await fetch("http://127.0.0.1:5000/apply_leave", {
+    const res = await fetch(`${API_URL}apply_leave`, {
       method: "POST",
       body: formData,
     });

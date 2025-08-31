@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./register.css"; // Create this file for modal styles
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Register = ({ onRegister, goToLogin }) => {
   const [showModal, setShowModal] = useState(true);
   const [username, setUsername] = useState("");
@@ -20,7 +23,7 @@ const Register = ({ onRegister, goToLogin }) => {
     formData.append("role", role);
     formData.append("password", password);
 
-    const res = await fetch("http://127.0.0.1:5000/create_users", {
+    const res = await fetch(`${API_URL}create_users`, {
       method: "POST",
       body: formData,
     });

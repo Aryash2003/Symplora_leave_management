@@ -38,13 +38,15 @@ tr:last-child td {
   border-bottom: none;
 }
 
+/* Add this to both App.css and index.css input, select rules */
 input, select {
   padding: 0.5em 1em;
   margin: 0.5em 0.5em 0.5em 0;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
   font-size: 1em;
-  background: #f9f9f9;
+  background: #fff;
+  color: #213547; /* <-- Add this line */
 }
 
 form {

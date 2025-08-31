@@ -10,7 +10,22 @@ def get_users():
     users = User.query.all()
     return jsonify({'users': [user.to_json() for user in users]})
 
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
 
+    if not username or not password:
+        return {"message": "Username and password are required."}, 400
+
+    user = User.query.filter_by(username=username).first()
+    if not user or user.password != password:
+        return {"message": "Invalid username or password."}, 401
+
+    return {
+        "message": "Login successful!",
+        "user": user.to_json()
+    }, 200
 #Create a new user
 @app.route('/create_users', methods=['POST'])
 def create_user():

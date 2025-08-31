@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminDashboard = () => {
   const [leaves, setLeaves] = useState([]);
   const [cancelUser, setCancelUser] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/show_leaves")
+    fetch(`${API_URL}show_leaves`)
       .then(res => res.json())
       .then(data => setLeaves(data.leaves));
   }, []);
@@ -14,7 +15,7 @@ const AdminDashboard = () => {
     const formData = new FormData();
     formData.append("leave_id", leave_id);
     formData.append("status", status);
-    await fetch("http://127.0.0.1:5000/update_leave_balance", {
+    await fetch(`${API_URL}update_leave_balance`, {
       method: "POST",
       body: formData,
     });
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
   const cancelAllLeaves = async () => {
     const formData = new FormData();
     formData.append("username", cancelUser);
-    await fetch("http://127.0.0.1:5000/cancel_all_leave", {
+    await fetch(`${API_URL}cancel_all_leave`, {
       method: "POST",
       body: formData,
     });
