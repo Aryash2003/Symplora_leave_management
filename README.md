@@ -1,6 +1,6 @@
 # Leave Management API (Flask + SQLAlchemy)
 
-A simple leave-management backend built with **Flask**, **Flask-SQLAlchemy**, and **SQLite**, plus a minimal HTML page for manual API testing.
+A simple leave-management application with frontend built using **React** and backend built with **Flask**, **Flask-SQLAlchemy**, and **SQLite**.
 
 ---
 ## Important Instructions 
