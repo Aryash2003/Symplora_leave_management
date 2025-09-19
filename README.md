@@ -3,7 +3,8 @@
 A simple leave-management backend built with **Flask**, **Flask-SQLAlchemy**, and **SQLite**, plus a minimal HTML page for manual API testing.
 
 ---
-
+## Important Instructions 
+-While applying for leave as a user, please apply in the format DD-MM-YYYY as start date and similarly for end date.
 ## ✨ Features
 - User management (create & list users)
 - Apply for leave, list all leave requests
