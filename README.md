@@ -5,6 +5,7 @@ A simple leave-management application with frontend built using **React** and ba
 ---
 ## Important Instructions 
 -While applying for leave as a user, please apply in the format DD-MM-YYYY as start date and similarly for end date.
+-Please wait for 1-2 minutes after the application starts as the backend goes to sleep after some time of inactivity due to deployment on Render. Will be fixed in upcoming updates
 ## ✨ Features
 - User management (create & list users)
 - Apply for leave, list all leave requests
